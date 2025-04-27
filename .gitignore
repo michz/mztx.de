@@ -1,0 +1,9 @@
+tools/
+.bak/
+.git/
+tmp/
+clock/
+*.swp
+*.swo
+*~
+Thumbs.db

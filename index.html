@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Michael Zapf technix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="de">
+    <meta http-equiv="expires" content="0">
+    <meta name="author" content="Michael Zapf">
+    <meta name="keywords" content="events, media, info, computer science, informatics, software, development, technik, technic, technics" />
+
+    <link rel="stylesheet" type="text/css" href="./contrib/slick.css"/>
+
+    <link href="dist/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>Michael Zapf technix // Eventtechnik // Medientechnik // Informationstechnik</h1>
+
+    <div id="introslider">
+        <div class="slide sound">
+            <h2>because your <span>sound</span> matters</h2>
+        </div>
+        <div class="slide video">
+            <h2>because your <span>video</span> matters</h2>
+        </div>
+        <div class="slide event">
+            <h2>because your <span>event</span> matters</h2>
+        </div>
+        <div class="slide software">
+            <h2>because your <span>software</span> matters</h2>
+        </div>
+        <div class="slide network">
+            <h2>because your <span>network</span> matters</h2>
+        </div>
+    </div>
+
+    <div id="main">
+
+        <div id='content'>
+            <div class="logo">
+                <img src="./img/MZX_v1_11_dark.svg">
+            </div>
+            <p class="name">Michael Zapf</p>
+            <p>Jägerstr. 26<br />90451 Nürnberg</p>
+            <p>Telefon: <a href="tel://+4915156686763">0151 56686763</a></p>
+            <p>E-Mail: <a href='mailto:m.zapf@mztx.de'>m.zapf@mztx.de</a></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./dist/t.js" async></script>
+    <script type="text/javascript" src="./contrib/jquery.min.js"></script>
+    <script type="text/javascript" src="./contrib/slick.min.js"></script>
+
+    <script>
+        // Source of scrolling stuff:
+        // https://pqina.nl/blog/applying-styles-based-on-the-user-scroll-position-with-smart-css/
+
+        // The debounce function receives our function as a parameter
+        const debounce = (fn) => {
+            // This holds the requestAnimationFrame reference, so we can cancel it if we wish
+            let frame;
+
+            // The debounce function returns a new function that can receive a variable number of arguments
+            return (...params) => {
+                // If the frame variable has been defined, clear it now, and queue for next frame
+                if (frame) {
+                    cancelAnimationFrame(frame);
+                }
+
+                // Queue our function call for the next frame
+                frame = requestAnimationFrame(() => {
+                    // Call our function and pass any params we received
+                    fn(...params);
+                });
+            };
+        };
+
+        // Reads out the scroll position and stores it in the data attribute
+        // so we can use it in our stylesheets
+        const storeScroll = () => {
+            var height = window.innerHeight
+                || document.documentElement.clientHeight
+                || document.body.clientHeight;
+
+            document.documentElement.dataset.scroll = window.scrollY;
+            var portionY = window.scrollY / height;
+            var percentY = portionY * 120;
+
+            var positionY = '0';
+            if (percentY < 65) {
+                positionY = 'calc(65vh - ' + percentY + 'vh)';
+            }
+
+            document.querySelectorAll('#introslider h2').forEach(function(node) {
+                node.style.marginTop = positionY;
+            });
+        };
+
+        // Listen for new scroll events, here we debounce our `storeScroll` function
+        document.addEventListener("scroll", debounce(storeScroll), { passive: true });
+
+        // Update scroll position for first time
+        storeScroll();
+
+        $('#introslider').slick({
+            dots: false,
+            infinite: true,
+            speed: 1000,
+            fade: true,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            cssEase: 'linear',
+            draggable: false,
+            focusOnSelect: false,
+            touchMove: false,
+            prevArrow: '',
+            slidesToShow: 1,
+            nextArrow: '',
+            pauseOnFocus: false,
+            pauseOnHover: false,
+            pauseOnDotsHover: false,
+        });
+    </script>
+
+</body>
+</html>
